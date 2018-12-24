@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>知识库免费下载</title>
+    {% include 'layout/_require_header.html' %}
+</head>
+<body>
+<div class="layui-container">
+    <div style="text-align: center;margin-top: 100px">
+        <h1>知识库免费下载</h1>
+    </div>
+
+    <!-- 数据库选择 -->
+    <div class="layui-row" style="margin-top: 50px">
+        <div class="layui-col-md8 layui-col-md-offset2 layui-col-xs12">
+            <ul class="dbs">
+                <li class="active"><a href="javascript:chengeDb(0)">综合</a></li>
+                <li><a href="javascript:chengeDb(1)">期刊</a></li>
+                <li><a href="javascript:chengeDb(2)">博硕</a></li>
+                <li><a href="javascript:chengeDb(3)">会议</a></li>
+                <li><a href="javascript:chengeDb(4)">报纸</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- 检索框 -->
+    <div class="layui-row">
+        <div class="layui-col-md8 layui-col-md-offset2 layui-col-xs12">
+            <form action="{{ url_for('search') }}">
+                <input type="hidden" name="db" id="db" value="SCDB">
+                <div class="layui-row">
+                    <div class="layui-col-md10 ">
+                        <input type="text" class="layui-input" style="margin-top: 10px" name="keyword"
+                               placeholder="建议在iData上搜索到文献后复制标题到此">
+                    </div>
+                    <div class="layui-col-md2" style="text-align: right">
+                        <button class="layui-btn" style="margin-top: 10px">检索一下</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% include 'layout/_require_foot.html' %}
+<script>
+
+</script>
+</body>
+</html>

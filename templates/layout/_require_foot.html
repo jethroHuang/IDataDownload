@@ -1,0 +1,19 @@
+<div style="text-align: center;color: gray;margin: 100px 20px 50px;">
+    本网站使用第三方公益接口获取文献链接，内容均来自 <a href="https://www.cn-ki.net">iData</a>
+</div>
+
+<script src="/static/lib/layui/layui.js"></script>
+<script>
+    function chengeDb(index) {
+        dbs = ['SCDB', 'CJFQ', 'CDMD', 'CIPD', 'CCND'];
+        document.getElementById('db').value = dbs[index];
+        let lis = document.querySelectorAll(".dbs li");
+        for (let i = 0; i < lis.length; i++) {
+            if (i === index) {
+                lis[i].classList.add('active')
+            } else {
+                lis[i].classList.remove('active')
+            }
+        }
+    }
+</script>

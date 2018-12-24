@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索列表</title>
+    {% include 'layout/_require_header.html' %}
+</head>
+<style>
+    .Mark {
+        color: red;
+    }
+
+    .list-item {
+        margin: 50px 0;
+    }
+
+    .item-title a {
+        font-size: 1.2rem;
+        color: blue;
+    }
+
+    .emm {
+        margin-top: 15px;
+        color: darkgreen;
+    }
+
+    .abstract {
+        margin-top: 5px;
+    }
+</style>
+<body>
+<div class="layui-container">
+
+    <!-- 数据库选择 -->
+    <div class="layui-row" style="margin-top: 50px">
+        <div class="layui-col-xs12">
+            <ul class="dbs">
+                <li{% if request.args.get('db')=='SCDB' %} class="active"{% endif %}>
+                    <a href="javascript:chengeDb(0)">综合</a>
+                </li>
+                <li{% if request.args.get('db')=='CJFQ' %} class="active"{% endif %}>
+                    <a href="javascript:chengeDb(1)">期刊</a>
+                </li>
+                <li{% if request.args.get('db')=='CDMD' %} class="active"{% endif %}>
+                    <a href="javascript:chengeDb(2)">博硕</a>
+                </li>
+                <li{% if request.args.get('db')=='CIPD' %} class="active"{% endif %}>
+                    <a href="javascript:chengeDb(3)">会议</a>
+                </li>
+                <li{% if request.args.get('db')=='CCND' %} class="active"{% endif %}>
+                    <a href="javascript:chengeDb(4)">报纸</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 检索框 -->
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-md8">
+            <form action="{{ url_for('search') }}">
+                <div style="display: flex">
+                    <div style="padding-right: 10px;flex-grow: 1">
+                        <input type="hidden" name="db" id="db" value="{{ request.args.get('db') }}">
+                        <input type="text"
+                               class="layui-input"
+                               value="{{ request.args.get('keyword') }}"
+                               placeholder="建议在iData上搜索到文献后复制标题到此"
+                               style="margin-top: 10px;min-width: 50px;" name="keyword">
+                    </div>
+                    <div>
+                        <button class="layui-btn" style="margin-top: 10px">检索</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <!--搜索结果-->
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            {% for item in items %}
+                <div class="list-item">
+                    <div class="item-title">
+                        <a class="url" target="_blank"
+                           href="{{ url_for('detail',filename=item['filename'],dbcode=item['dbcode']) }}">
+                            {{ item['title']|safe }}
+                        </a>
+                    </div>
+                    <div class="emm">
+                        {% if item['author'] %}<span>{{ item['author'] }}</span>{% endif %}
+                        {% if item['orgniz'] %}<span>{{ item['orgniz'] }}</span>{% endif %}
+                        {% if item['source'] %}<span>{{ item['source'] }}</span>{% endif %}
+                        {% if item['publish_time'] %}<span>{{ item['publish_time'] }}</span>{% endif %}
+                        {% if item['database'] %}<span>{{ item['database'] }}</span>{% endif %}
+                    </div>
+                    <div class="abstract">
+                        {{ item['abstract'] |safe }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div style="margin-bottom: 5px">找到共 {{ total }} 条数据</div>
+            <a class="layui-btn" href="{{ url_for('search',**args) }}">下一页</a>
+            <span style="color: gray;margin-left: 5px">因第三方接口限制，只能下一页</span>
+        </div>
+    </div>
+</div>
+{% include 'layout/_require_foot.html' %}
+</body>
+</html>

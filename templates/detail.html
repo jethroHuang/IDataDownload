@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详情页</title>
+    {% include 'layout/_require_header.html' %}
+</head>
+
+<style>
+    body {
+        background: #f8f8f8;
+    }
+
+    .content {
+        box-shadow: 1px 1px 1px #c1c1c1;
+        border-radius: 4px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        background: white;
+        padding: 20px;
+    }
+
+    .info {
+        color: gray;
+        margin-top: 30px;
+    }
+
+    .info p {
+        margin: 5px 0;
+    }
+
+    .info span {
+        margin-left: 15px;
+    }
+</style>
+<body>
+
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md8 layui-col-md-offset2 layui-col-xs12 content layui-form-pane">
+            <h1>
+                {{ detail['title'] }}
+            </h1>
+            <div class="info">
+                <p>作者<span>{{ detail['author'] or '无' }}</span></p>
+                <p>单位<span>{{ detail['orgniz'] or '无' }}</span></p>
+                <p>导师<span>{{ detail['tutor'] or '无' }}</span></p>
+                <p>关键<span>{{ detail['kws'] or '无' }}</span></p>
+            </div>
+            <div style="margin-top: 20px">
+                <h2>摘要</h2>
+                <hr>
+                <div style="line-height: 30px">
+                    {{ detail['abstract'] }}
+                </div>
+            </div>
+            <div style="display: flex;margin-top: 20px">
+                <a class="layui-btn" style="flex-grow: 1"
+                   href="{{
+                           url_for(
+                           'download',
+                           filename=detail['filename'],
+                           filename_en=detail['filename_en'],
+                           title=detail['title'],
+                           tablename=detail['tablename'])
+                           }}"
+                >
+                    免费下载文献
+                </a>
+                <a class="layui-btn layui-btn-primary" target="_blank"
+                   href="http://cnki.cn-ki.net/KCMS/detail/detail.aspx?dbcode={{ detail['dbcode'] }}&filename={{ detail['filename'] }}&dbname={{ detail['dbname'] }}">CNKI</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% include 'layout/_require_foot.html' %}
+</body>
+</html>
